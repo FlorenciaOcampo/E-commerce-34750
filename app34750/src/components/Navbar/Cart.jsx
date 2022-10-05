@@ -3,7 +3,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Cart() {
   return (
-    <a><AiOutlineShoppingCart/></a>
+    <a href="#"><AiOutlineShoppingCart/></a>
   )
 }
 
