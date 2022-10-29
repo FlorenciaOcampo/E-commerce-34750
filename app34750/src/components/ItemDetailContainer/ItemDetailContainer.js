@@ -1,31 +1,42 @@
+import ItemDetail from "../ItemDetail/ItemDetail"
 import {useState, useEffect } from "react"
-import { getProduct } from "../AsyncMock/AsyncMock"
+//import { getProduct } from "../AsyncMock/AsyncMock"
 import { useParams } from "react-router-dom"
+import { getDoc,doc } from 'firebase/firestore'
+import { db } from "../../services/firebase"
 
 const ItemDetailContainer = ( ) => {  
     const [product, setProduct] = useState()
     const [loading, setLoading]= useState(true)
     const {productId} = useParams()
     
-    useEffect(() => {
-        getProduct(productId).then(response =>{
-            setProduct(response)
-        }).finally (()=>{
-            setLoading(false)
-        })
-    },[])
+    useEffect(() => { const docRef = doc(db, 'products', productId)
 
-    console.log (fetch(''))
-    console.log(product)
+    //     getProduct(productId).then(response =>{
+    //         setProduct(response)
+    //     }).finally (()=>{
+    //         setLoading(false)
+    //     }) 
+    getDoc(docRef).then(doc => {
+        const data = doc.data()
+        const productAdapted = { id: doc.id,...data}
+        setProduct(productAdapted)
+    }).catch(error =>{
+        console.log(error)
+    }).finally(() => {
+        setLoading(false)
+    })
+},[productId])
+
+    // console.log (fetch(''))
+    // console.log(product)
 
     if (loading) {
         return <h1>Cargando...</h1>
     }
 return(
     <div>
-        <h1>Detalles de Libro</h1>
-        <div>{product.name}</div>
-        <p>{product.price}</p>
-        <img src={product.img}/>
-    </div>)}
-    export default ItemDetailContainer
+        <ItemDetail {...product}/>
+    </div>)
+}
+export default ItemDetailContainer
