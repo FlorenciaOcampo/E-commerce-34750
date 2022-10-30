@@ -57,7 +57,7 @@ import Cart from './components/Navbar/Cart';
 import { CartContextProvider  } from './context/CartContext';
 import { NotificationProvider } from './components/Notification/Notification';
 import Notification from './components/Notification/Notification';
-
+import Checkout from './Checkout/Checkout';
 function App() {
   return (
     <div className="App">
@@ -73,7 +73,7 @@ function App() {
 
             {/* Acá esta tu ruta de cart */}
             <Route path='/cart' element={<Cart/>} /> 
-            
+            <Route path= '/checkout' element={<Checkout/>}/>
 
 
             <Route path='/' element={<h1>404 NOT FOUND</h1>} />
